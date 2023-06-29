@@ -93,4 +93,75 @@ const listUsers = async (req, res)=>{
 
 }
 
-module.exports={createNewUser,getUserViaId,listUsers}
+const updateUser = async (req, res)=>{
+   const {name, birthday, phone, email,
+       password, passwordConfirm, zipCode,
+       street,number,neighbourhood,city
+      } =  req.body;
+
+   const {id} = req.params;
+
+   if(!id){
+       throw new CustomError.NotFoundError('Please provide id');
+   }
+
+   const user = await User.findById({_id:id});
+   if(!user){
+       throw new CustomError.NotFoundError(`No user with id : ${id}`);
+   }
+
+   if(name){
+       user.name = name;
+   }
+
+   if(birthday){
+       user.birthday = birthday;
+   }
+
+   if(phone){
+       user.phone = phone;
+   }
+
+   if(email){
+       user.email = email;
+   }
+
+
+   if(zipCode){
+       user.zipCode = zipCode;
+   }
+
+   if(street){
+       user.street = street;
+   }
+
+   if(number){
+       user.number = number;
+   }
+
+   if(city){
+       user.city = city;
+   }   
+
+   if(neighbourhood){
+       user.neighbourhood = neighbourhood;
+   }
+
+   await user.save();
+
+   res.status(200).json({user});
+
+}
+
+const deleteUser = async (req, res)=>{
+   const {id} = req.params;
+
+   if(!id){
+       throw new CustomError.NotFoundError('Please provide id');
+   }
+
+   await User.deleteOne({_id:id});
+
+   res.status(200).json({message: `User with id : ${id} deleted`});
+}
+module.exports={createNewUser,getUserViaId,listUsers,updateUser,deleteUser}
