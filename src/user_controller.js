@@ -61,4 +61,22 @@ const createNewUser = async (req, res)=>{
         res.status(200).json({
             user });
 }
-module.exports={createNewUser}
+
+
+const getUserViaId = async (req, res)=>{
+    const {id} = req.params;
+
+    if(!id){
+        throw new CustomError.NotFoundError('Please provide id');
+    }
+
+    const user = await User.findById({_id:id});
+
+    if(!user){
+        throw new CustomError.NotFoundError(`No user with id : ${id}`);
+    }
+
+    res.status(200).json({user});
+
+}
+module.exports={createNewUser,getUserViaId}
