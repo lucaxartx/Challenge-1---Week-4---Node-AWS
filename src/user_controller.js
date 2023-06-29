@@ -1,5 +1,5 @@
 const CustomError = require('../errors');
-const User = require('../model/user_model');
+const User = require('../user_model');
 
 const createNewUser = async (req, res)=>{
     const {name, birthday, phone, email,
