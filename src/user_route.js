@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const {createUser,getUserViaId}=require('./user_controller')
+const {createNewUser,getUserViaId,listUsers}=require('./user_controller')
 
 
-router.post('/users',createUser);
-router.get('/users/:id',getUserbyId);
-
+router.post('/users',createNewUser);
+router.get('/users/:id',getUserViaId);
+router.get('/users',listUsers);
 
 
 module.exports = router;

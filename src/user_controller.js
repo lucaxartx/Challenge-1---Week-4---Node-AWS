@@ -79,4 +79,18 @@ const getUserViaId = async (req, res)=>{
     res.status(200).json({user});
 
 }
-module.exports={createNewUser,getUserViaId}
+
+const listUsers = async (req, res)=>{
+    let {limit, offset} = req.query;
+
+    limit = parseInt(limit) || 10;
+    offset = parseInt(offset)|| 0;
+
+    const users = await User.find().skip(offset).limit(limit);
+
+
+    res.status(200).json({limit,offset,total: users.length, items: users});
+
+}
+
+module.exports={createNewUser,getUserViaId,listUsers}
